@@ -9,8 +9,8 @@
     "profiles": [
       {
         "network": "linkedin",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "Francesco Pironti",
+        "url": "https://www.linkedin.com/feed/?trk=sem-ga_campid.20677489327_asid.153452322614_crid.677545198980_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9202684"
       }
     ]
   },
@@ -19,16 +19,16 @@
       "name": "Dimes, University Of Calabria",
       "position": "Research Fellow",
       "url": "https://smartshires.github.io/smartshires/",
-      "startDate": "2024-01-05",
-      "endDate": "2024-01-10",
+      "startDate": "2024-05-1",
+      "endDate": "2024-11-1",
       "summary": "Develop new technology about low power network in energy constrained enviroments",
       "highlights": ["Smartshire"]
     },
     {
       "name": "Dimes, University Of Calabria",
       "position": "PHD student",
-      "url": "https://smartshires.github.io/smartshires/",
-      "startDate": "2024-01-10",
+    
+      "startDate": "2024-10-1",
       "endDate": "2027-01-10",
       "summary": ""
     }
@@ -40,7 +40,7 @@
       "location": "Rogliano, Italy",
       "position": "Leader",
       "url": "https://agesci.it",
-      "startDate": "2014-04-01",
+      "startDate": "2010-10-01"
   
     }
   ],
@@ -65,7 +65,7 @@
       "issuer": "Stanford University",
       "url": "https://example.com",
       "icon": "fa-solid fa-location-dot"
-    },
+    }
     
   ],
   "publications": [

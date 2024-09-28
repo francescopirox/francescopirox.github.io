@@ -113,7 +113,7 @@ youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
 contact_note: >
-  Contact me by mail please.
+  Feel free to reach me by mail please.
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -134,7 +134,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: francescopirox's blog # blog_name will be displayed in your blog page
-blog_description: a blog about my research journey
+blog_description: a blog about things that didn't work as planned!
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -196,6 +196,9 @@ collections:
     output: true
     permalink: /:collection/:title/
   projects:
+    output: true
+    permalink: /:collection/:title/
+  teaching:
     output: true
     permalink: /:collection/:title/
 
@@ -314,7 +317,7 @@ display_categories: ["external-services"] # these categories will be displayed o
 
 scholar:
   last_name: [Pironti]
-  first_name: [Francesco, A.]
+  first_name: [Francesco, Aurelio]
 
   style: apa
   locale: it
