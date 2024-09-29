@@ -5,4 +5,5 @@ inline: true
 related_posts: false
 ---
 
-I'm working on my website!
+I'm working on my website! More content will be added! Give me FEEDBACK!
+
