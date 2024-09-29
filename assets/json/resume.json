@@ -83,16 +83,27 @@
   ],
   "skills": [
     {
-      "name": "Physics",
+      "name": "Informatics",
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
+        "Programming in various languages: Java, Python, C/C++ , Ruby, Assembly, PHP, Javascript",
+        "Using Databases, Queries and relational objects in Mysql,MariaDB,Postgres",
+        "Employing Flask and Spring-Boot as back-end engine",
+        "Virtualizing software achitecture unsing Docker and Proxmox"
+       
+      ]
+    },
+    {
+      "name": "Cybersecurity",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Scan and enumartion using various tools like NMAP and custom ones",
+        "Using tool like SQLmap",
+        "Develop and deploy payload using Metasploit",
+        "Firewalling emploing Suricata",
+        "Modelling Threats and analyze software boundaries"
       ]
     }
   ],
@@ -110,15 +121,21 @@
   ],
   "interests": [
     {
-      "name": "Physics",
+      "name": "DIY",
       "icon": "fa-solid fa-tag",
       "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
+        "3D printing",
+        "Photography",
+        "Video Making"
+      ]
+    },
+    {
+      "name": "Others",
+      "icon": "fa-solid fa-tag",
+      "keywords": [
+        "Space",
+        "Guitar playing",
+        "Hiking"
       ]
     }
   ],
